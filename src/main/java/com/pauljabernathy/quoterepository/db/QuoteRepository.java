@@ -41,10 +41,6 @@ public class QuoteRepository {
     
     private static DataSource dataSource() {
 	
-	String url = "";
-	String parameters = "";
-	String userName = "";
-	String password = "";
 	Properties props = new Properties();
 	try {
 	    props = getConnectionProperties();
@@ -54,11 +50,9 @@ public class QuoteRepository {
 	
 	BasicDataSource ds = new BasicDataSource();
 	ds.setDriverClassName(props.getProperty("driver"));
-	parameters = props.getProperty("parameters");
-	url = "jdbc:mysql://mysqlcluster27.registeredsite.com:3306/archimedes";
-	StringBuilder urlb = new StringBuilder(props.getProperty("url")).append(":").append(props.getProperty("port"))
-	    .append("/").append(props.getProperty("schema"));
-	ds.setUrl(urlb.toString() + parameters);
+	StringBuilder url = new StringBuilder(props.getProperty("url")).append(":").append(props.getProperty("port"))
+	    .append("/").append(props.getProperty("schema")).append(props.getProperty("parameters"));
+	ds.setUrl(url.toString());
 	ds.setUsername(props.getProperty("userName"));
 	ds.setPassword(props.getProperty("password"));
 	return ds;
@@ -76,18 +70,6 @@ public class QuoteRepository {
 	return new JdbcTemplate(dataSource());
     }
     
-    public static void doSomethingWithQuotes() {
-	
-	jdbcTemplate = jdbcTemplate();
-	//this.doCustomersDBFromDemo();
-	
-	//jdbcTemplate.queryForList("select * from archimedes.quotes").forEach(row -> log.info(row.toString()));
-	
-	/*jdbcTemplate.query("select * from archimedes.quotes", (rs, rowNum) -> new Quote(rs.getInt("id"), rs.getInt("speaker"), rs.getString("text"), rs.getString("reference")))
-	    .forEach(row -> log.info(row.toString()));*/
-	QuoteRepository.getAllQuotes().stream().forEach(quote -> log.info(quote.toString()));
-    }
-    
     public static ArrayList<Quote> getAllQuotes() {
 	ArrayList<Quote> response = new ArrayList<>();
 	
@@ -100,8 +82,6 @@ public class QuoteRepository {
 	
 	String sql = "insert into archimedes.quotes values(?, ?, ?, ?)";
 	return jdbcTemplate.update(sql, new Object[] { getNextId(), quote.getSpeaker(), quote.getText(), quote.getReference() });
-	//sql = "insert into archimedes.quotes values(3, 2, 'new quote', 'not sure')";
-	//return jdbcTemplate.update(sql);
     }
     
     public static int getMaxId() {
