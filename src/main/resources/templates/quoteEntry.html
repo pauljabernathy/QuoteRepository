@@ -1,0 +1,44 @@
+<html>
+    <body>
+        <form action="#" th:action="@{/quoteEntry}" th:object="${quote}" method="post">
+            <table>
+                <tr>
+                    <td>Id</td>
+                    <td><input type="text" th:field="*{id}" /></td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" th:field="*{speaker}" /></td>
+                </tr>
+                <tr>
+                    <td>Text:</td>
+                    <td><input type="text" th:field="*{text}" /></td>
+                </tr>
+                <tr>
+                    <td>Reference:</td>
+                    <td><input type="text" th:field="*{reference}" /></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+        <!--<form action="#" th:action="@{/quote}" th:object="${quoteEntry}" method="post">
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" th:field="*{speaker}" /></td>
+                    <td th:if="${#fields.hasErrors('speaker')}" th:errors="*{speaker}">Name Error</td>
+                </tr>
+                <tr>
+                    <td>Text:</td>
+                    <td><input type="text" th:field="*{text}" /></td>
+                    <td th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Text Error</td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>-->
+    </body>
+</html>
